@@ -27,4 +27,10 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/ladder', function () {
+    return Inertia::render('Ladder');
+})->name('ladder');
+Route::middleware(['auth:sanctum', 'verified'])->get('/shop', function () {
+    return Inertia::render('Shop');
+})->name('shop');
 Route::get('user/reward', 'App\Http\Controllers\UserController@getReward');
