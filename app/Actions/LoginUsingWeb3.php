@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Models\Rewards;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -29,11 +30,19 @@ class LoginUsingWeb3
         ]));
 
         $user = Auth::user();
-
         $userInfo = User::getUser($user->id);
+        $userReward = User::getUserReward($user->id);
+
         if ($userInfo->name === NULL) {
             $user->name = 'Player#'.rand(1000, 9999);
             $user->save();
+        }
+
+        if ($userReward === NULL) {
+            $reward = new Rewards();
+            $reward->user_id = $user->id;
+            $reward->reward_number = "0";
+            $reward->save();
         }
 
         return Redirect::route('dashboard');

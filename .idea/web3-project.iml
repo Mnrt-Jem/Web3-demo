@@ -131,6 +131,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/simplito/bigint-wrapper-php" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/simplito/elliptic-php" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/simplito/bn-php" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/laracademy/generators" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
