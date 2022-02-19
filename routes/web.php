@@ -27,5 +27,4 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
-
-Route::post('login-web3', \App\Actions\LoginUsingWeb3::class);
+Route::get('user/reward', 'App\Http\Controllers\UserController@getReward');

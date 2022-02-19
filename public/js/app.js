@@ -21365,12 +21365,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      isLoading: false,
-      error: null,
+      isLoading1: false,
+      isLoading2: false,
+      isLoading3: false,
+      error1: null,
+      error2: null,
+      error3: null,
+      isDelayElapsed1: false,
+      isDelayElapsed2: false,
+      isDelayElapsed3: false,
       data: null,
       balance: null,
       coins: null,
-      isDelayElapsed: false
+      reward: null
     };
   },
   methods: {
@@ -21384,9 +21391,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.error = null;
-                _this.isLoading = true;
-                _this.isDelayElapsed = false;
+                _this.error1 = null;
+                _this.isLoading1 = true;
+                _this.isDelayElapsed1 = false;
                 web3 = new (web3_dist_web3_min_js__WEBPACK_IMPORTED_MODULE_3___default())(window.ethereum);
                 _context.next = 6;
                 return web3.eth.getAccounts();
@@ -21396,12 +21403,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 web3.eth.getBalance(accounts[0]).then(function (result) {
                   _this.balance = web3.utils.fromWei(result);
                 })["catch"](function (error) {
-                  _this.error = error;
+                  _this.error1 = error;
                 })["finally"](function () {
-                  _this.isLoading = false;
+                  _this.isLoading1 = false;
                 });
                 setTimeout(function () {
-                  _this.isDelayElapsed = true;
+                  _this.isDelayElapsed1 = true;
                 }, 200);
 
               case 9:
@@ -21422,9 +21429,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this2.error = null;
-                _this2.isLoading = true;
-                _this2.isDelayElapsed = false;
+                _this2.error2 = null;
+                _this2.isLoading2 = true;
+                _this2.isDelayElapsed2 = false;
                 web3 = new (web3_dist_web3_min_js__WEBPACK_IMPORTED_MODULE_3___default())(window.ethereum);
                 _context2.next = 6;
                 return web3.eth.getAccounts();
@@ -21438,27 +21445,49 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   adresse: '0xc062368600228C308C75Ef2C02E22948297Acb89',
                   jeton: 'VEGETA'
                 }];
-                console.log(_erc20abi_json__WEBPACK_IMPORTED_MODULE_4__);
                 tokenInst = new web3.eth.Contract(_erc20abi_json__WEBPACK_IMPORTED_MODULE_4__, '0x959b88966fc5b261df8359961357d34f4ee27b4a');
-                console.log(tokenInst);
-                _context2.next = 13;
+                _context2.next = 11;
                 return tokenInst.methods.balanceOf(accounts[0]).call();
 
-              case 13:
+              case 11:
                 balance = _context2.sent;
-                console.log(balance);
-                _this2.coins = web3.utils.fromWei(balance);
 
-              case 16:
+                if (balance !== null) {
+                  _this2.isLoading2 = false;
+                  _this2.coins = web3.utils.fromWei(balance);
+                }
+
+              case 13:
               case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
       }))();
+    },
+    getReward: function getReward() {
+      var _this3 = this;
+
+      this.error3 = null;
+      this.isLoading3 = true;
+      this.isDelayElapsed3 = false;
+      axios.defaults.headers.get['Accepts'] = 'application/json';
+      axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+      axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept';
+      axios.get('http://127.0.0.1:8000/user/reward').then(function (result) {
+        _this3.reward = result.data.reward_number;
+      })["catch"](function (error) {
+        _this3.error3 = error;
+      })["finally"](function () {
+        _this3.isLoading3 = false;
+      });
+      setTimeout(function () {
+        _this3.isDelayElapsed3 = true;
+      }, 200);
     }
   },
   created: function created() {
+    this.getReward();
     this.getBalance();
     this.getBalanceOfCoins();
   }
@@ -25821,12 +25850,9 @@ var _hoisted_10 = {
 var _hoisted_11 = {
   key: 2
 };
-
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_12 = {
   "class": "mt-2 text-gray-600 dark:text-gray-400 text-sm"
-}, " Pending Reward : 100$ ", -1
-/* HOISTED */
-);
+};
 
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "mt-2"
@@ -25844,15 +25870,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Head, {
     title: "Web3test"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, _ctx.error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_4, "Error: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.error.message), 1
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, _ctx.error1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_4, "Error: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.error1.message), 1
   /* TEXT */
-  )) : _ctx.isLoading && _ctx.isDelayElapsed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_5, "Loading...")) : !_ctx.isLoading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.balance), 1
+  )) : _ctx.isLoading1 && _ctx.isDelayElapsed1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_5, "Loading...")) : !_ctx.isLoading1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.balance), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, _ctx.error ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_9, "Error: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.error.message), 1
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, _ctx.error2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_9, "Error: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.error2.message), 1
   /* TEXT */
-  )) : _ctx.isLoading && _ctx.isDelayElapsed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_10, "Loading...")) : !_ctx.isLoading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.coins), 1
+  )) : _ctx.isLoading2 && _ctx.isDelayElapsed2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_10, "Loading...")) : !_ctx.isLoading2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.coins), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), _hoisted_12, _hoisted_13])], 64
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, " Pending reward : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.reward) + " $ ", 1
+  /* TEXT */
+  ), _hoisted_13])], 64
   /* STABLE_FRAGMENT */
   );
 }
