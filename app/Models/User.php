@@ -66,4 +66,8 @@ class User extends Authenticatable
     {
         return DB::selectOne('SELECT * FROM users WHERE id = '.$id);
     }
+    public static function getUserReward($id)
+    {
+        return DB::selectOne('SELECT * FROM rewards WHERE user_id = '.$id);
+    }
 }
