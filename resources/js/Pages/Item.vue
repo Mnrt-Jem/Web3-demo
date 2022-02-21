@@ -1,30 +1,44 @@
 <template>
-    <div class="nft_picture">
-        <div class="quantity">{{ this.item.quantity }} / {{ this.item.quantity }}</div>
-        <div class="picture">
-            <img :src="this.item.nft_url">
+    <form @submit="buyItem">
+        <div class="nft_picture">
+            <div class="quantity">{{ this.item.quantity }} / {{ this.item.quantity }}</div>
+            <div class="picture">
+                <img :src="this.item.nft_url" :alt="this.item.name">
+            </div>
         </div>
-    </div>
-    <div class="title">{{ this.item.name }}</div>
-    <div class="resume">{{ this.item.summary }}</div>
-    <div class="bonus">Bonus : {{ this.item.bonus }}</div>
-    <div class="price">Price : {{ this.item.price }}</div>
-    <div class="btn-buy">
-        <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
-            Buy
-        </button>
-    </div>
+        <div class="title">{{ this.item.name }}</div>
+        <div class="resume">{{ this.item.summary }}</div>
+        <div class="bonus">Bonus : {{ this.item.bonus }}</div>
+        <div class="price">Price : {{ this.item.price }}</div>
+        <div class="btn-buy">
+            <jet-button>
+                Buy
+            </jet-button>
+        </div>
+    </form>
 </template>
-
 <script>
 import { defineComponent } from 'vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
+import JetButton from '@/Jetstream/Button.vue'
+import JetFormSection from '@/Jetstream/FormSection.vue'
+import JetInput from '@/Jetstream/Input.vue'
+import JetInputError from '@/Jetstream/InputError.vue'
+import JetLabel from '@/Jetstream/Label.vue'
+import JetActionMessage from '@/Jetstream/ActionMessage.vue'
+import { useForm } from '@inertiajs/inertia-vue3';
 
 export default defineComponent({
     name: "Item",
     components: {
         Head,
         Link,
+        JetActionMessage,
+        JetButton,
+        JetFormSection,
+        JetInput,
+        JetInputError,
+        JetLabel,
     },
 
     props: {
@@ -39,6 +53,14 @@ export default defineComponent({
     }),
 
     methods: {
+        buyItem: function (e) {
+            const itemId = this.item.id;
+            // Request web3
+
+                // User set item
+                useForm({ itemId }).post('/shop-buy')
+            // End request web3
+        },
     },
 
     created: function () {
