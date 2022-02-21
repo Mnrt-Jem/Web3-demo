@@ -18,6 +18,13 @@ class ShopController extends Controller
         $Items = Items::getItems();
         return response()->json($Items, 200);
     }
+    public function getItemAvailable($itemId)
+    {
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: GET");
+        $Items = Items::getItemAvailable($itemId);
+        return response()->json($Items, 200);
+    }
     public function buyItem(Request $request)
     {
         $user = Auth::user();

@@ -81,5 +81,9 @@ class Items extends Model
     {
         return DB::select('SELECT * FROM items');
     }
+    public static function getItemAvailable($itemId)
+    {
+        return DB::selectOne('SELECT item_id,(items.quantity - SUM(user_items.quantity)) as available  FROM `user_items` LEFT JOIN items ON user_items.item_id = items.id WHERE user_items.item_id='.$itemId.' GROUP BY item_id ');
+    }
     // Relations ...
 }

@@ -7,6 +7,7 @@
     display: grid;
     width: 25%;
     text-align: center;
+    padding: 15px;
 }
 .nft_picture {
     position: relative;
@@ -25,4 +26,10 @@
 .nft_picture .picture img {
     width: 250px;
     height: 200px;
+}
+.success {
+    color: green;
+}
+.error {
+    color: red;
 }

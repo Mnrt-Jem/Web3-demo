@@ -52,5 +52,6 @@ Route::get('user/reward', 'App\Http\Controllers\UserController@getReward');
 Route::get('user/items', 'App\Http\Controllers\UserController@getInventory');
 Route::get('games/ladder/{id}', 'App\Http\Controllers\LadderController@getLadder');
 Route::get('shop/items', 'App\Http\Controllers\ShopController@getItems');
+Route::get('shop/available/{id}', 'App\Http\Controllers\ShopController@getItemAvailable');
 
 

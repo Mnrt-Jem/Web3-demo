@@ -40,7 +40,7 @@ export default defineComponent({
             axios.get('http://127.0.0.1:8000/shop/items').then((result) => {
                 this.items = result.data;
             });
-        }
+        },
     },
 
     created: function () {
