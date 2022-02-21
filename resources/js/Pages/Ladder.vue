@@ -2,7 +2,7 @@
     <app-layout title="Ladder">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Ladderboard
+                Ladderboard TOP #100
             </h2>
         </template>
         <div class="py-12">
@@ -11,41 +11,29 @@
                     <div class="leaderboard">
                         <header>
                             <nav>
-                                <a href="" class="active">Stage</a>
-                                <a href="">Coins</a>
-                                <a href="">Kill</a>
+                                <jet-nav-link :href="route('StageLadder')" :active="route().current('StageLadder')">
+                                    STAGE
+                                </jet-nav-link>
+                                <jet-nav-link :href="route('CoinsLadder')" :active="route().current('CoinsLadder')">
+                                    COINS
+                                </jet-nav-link>
+                                <jet-nav-link :href="route('KillLadder')" :active="route().current('KillLadder')">
+                                    KILL
+                                </jet-nav-link>
                             </nav>
                         </header>
-                        <table>
-                            <thead>
-                            <tr>
-                                <th class="rank">Rank</th>
-                                <th class="name">Nickname</th>
-                                <th class="number">Ammount</th>
-                                <th class="time">Time</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td class="rank">1</td>
-                                <td class="name">Tuubz</td>
-                                <td class="number">100</td>
-                                <td class="time">25:10</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">2</td>
-                                <td class="name">MortaL</td>
-                                <td class="number">78</td>
-                                <td class="time">15:30</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">3</td>
-                                <td class="name">alixkill</td>
-                                <td class="number">57</td>
-                                <td class="time">54:03</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <div v-if="route().current('StageLadder')">
+                            <StageLadder />
+                        </div>
+                        <div v-else-if="route().current('CoinsLadder')">
+                            <CoinsLadder />
+                        </div>
+                        <div v-else-if="route().current('KillLadder')">
+                            <KillLadder />
+                        </div>
+                        <div v-else>
+                            <StageLadder />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -57,11 +45,19 @@
 import { defineComponent } from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import Welcome from '@/Jetstream/Welcome.vue'
+import StageLadder from '@/Pages/StageLadder.vue'
+import CoinsLadder from '@/Pages/CoinsLadder.vue'
+import KillLadder from '@/Pages/KillLadder.vue'
+import JetNavLink from '@/Jetstream/NavLink.vue'
 
 export default defineComponent({
     components: {
         AppLayout,
         Welcome,
+        StageLadder,
+        CoinsLadder,
+        KillLadder,
+        JetNavLink,
     },
 })
 </script>
