@@ -70,4 +70,22 @@ class User extends Authenticatable
     {
         return DB::selectOne('SELECT * FROM rewards WHERE user_id = '.$id);
     }
+    public static function getUserInventory($id)
+    {
+        return DB::select('SELECT * FROM user_items LEFT JOIN items ON user_items.item_id = items.id WHERE user_id = '.$id);
+    }
+    public static function setUserItem($userId, $itemId)
+    {
+        $userItems = DB::selectOne('SELECT * FROM user_items WHERE user_id='.$userId.' and item_id='.$itemId);
+        if ($userItems === NULL) {
+            $user_item = New UserItems();
+            $user_item->user_id = $userId;
+            $user_item->item_id = $itemId;
+            $user_item->quantity = 1;
+            $user_item->save();
+        } else {
+            $newQuantity = $userItems->quantity + 1;
+            DB::update('UPDATE user_items SET quantity = ? WHERE user_id = ? and item_id=?',[$newQuantity,$userId,$itemId]);
+        }
+    }
 }

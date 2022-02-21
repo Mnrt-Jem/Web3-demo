@@ -1,0 +1,17 @@
+.items-profile {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.items-profile .item {
+    display: grid;
+    width: 25%;
+    text-align: center;
+}
+.nft_picture .picture {
+    justify-content: center;
+    display: flex;
+}
+.nft_picture .picture img {
+    width: 100%;
+}

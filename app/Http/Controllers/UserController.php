@@ -27,4 +27,14 @@ class UserController extends Controller
         $reward = User::getUserReward($user->id);
         return response()->json($reward, 200);
     }
+
+    public function getInventory()
+    {
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: GET");
+
+        $user = Auth::user();
+        $Inventory = User::getUserInventory($user->id);
+        return response()->json($Inventory, 200);
+    }
 }

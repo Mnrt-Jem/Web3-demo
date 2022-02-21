@@ -14,7 +14,6 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -23,10 +22,14 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/shop', function () {
+    return Inertia::render('Shop');
+})->name('shop');
+Route::post('login-web3', \App\Actions\LoginUsingWeb3::class);
+Route::post('shop-buy', 'App\Http\Controllers\ShopController@buyItem');
 
 // LADDERBOARD
 Route::middleware(['auth:sanctum', 'verified'])->get('/ladder', function () {
@@ -43,12 +46,12 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/ladder/kill', function ()
 })->name('KillLadder');
 // END LADDERBOARD
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/shop', function () {
-    return Inertia::render('Shop');
-})->name('shop');
-Route::post('login-web3', \App\Actions\LoginUsingWeb3::class);
 
 // API
 Route::get('user/reward', 'App\Http\Controllers\UserController@getReward');
+Route::get('user/items', 'App\Http\Controllers\UserController@getInventory');
 Route::get('games/ladder/{id}', 'App\Http\Controllers\LadderController@getLadder');
+Route::get('shop/items', 'App\Http\Controllers\ShopController@getItems');
+Route::get('shop/available/{id}', 'App\Http\Controllers\ShopController@getItemAvailable');
+
 
