@@ -70,4 +70,8 @@ class User extends Authenticatable
     {
         return DB::selectOne('SELECT * FROM rewards WHERE user_id = '.$id);
     }
+    public static function getUserInventory($id)
+    {
+        return DB::select('SELECT * FROM user_items LEFT JOIN items ON user_items.item_id = items.id WHERE user_id = '.$id);
+    }
 }
