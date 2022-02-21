@@ -3,22 +3,22 @@
     <div class="ml-12">
         <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
             Avax :
-            <span v-if="error">Error: {{ error.message }}</span>
-            <span v-else-if="isLoading && isDelayElapsed">Loading...</span>
-            <span v-else-if="!isLoading">
+            <span v-if="error1">Error: {{ error1.message }}</span>
+            <span v-else-if="isLoading1 && isDelayElapsed1">Loading...</span>
+            <span v-else-if="!isLoading1">
                 {{ balance }}
             </span>
         </div>
         <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
             Coins :
-            <span v-if="error">Error: {{ error.message }}</span>
-            <span v-else-if="isLoading && isDelayElapsed">Loading...</span>
-            <span v-else-if="!isLoading">
+            <span v-if="error2">Error: {{ error2.message }}</span>
+            <span v-else-if="isLoading2 && isDelayElapsed2">Loading...</span>
+            <span v-else-if="!isLoading2">
                 {{ coins }}
             </span>
         </div>
         <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-            Pending Reward : 100$
+            Pending reward : {{ reward }} $
         </div>
         <div class="mt-2">
             <div class="flex items-center justify-center px-4 py-3 bg-gray-50 text-right sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
@@ -51,20 +51,28 @@ export default defineComponent({
     },
 
     data: () => ({
-        isLoading: false,
-        error: null,
+        isLoading1: false,
+        isLoading2: false,
+        isLoading3: false,
+        error1: null,
+        error2: null,
+        error3: null,
+        isDelayElapsed1: false,
+        isDelayElapsed2: false,
+        isDelayElapsed3: false,
         data: null,
         balance: null,
         coins: null,
-        isDelayElapsed: false,
+        reward: null,
+
     }),
 
     methods: {
         // GET AVAX BALANCE
         async getBalance() {
-            this.error = null
-            this.isLoading = true
-            this.isDelayElapsed = false
+            this.error1 = null
+            this.isLoading1 = true
+            this.isDelayElapsed1 = false
             const web3 = new Web3(window.ethereum);
             var accounts = await web3.eth.getAccounts();
             web3.eth.getBalance(accounts[0])
@@ -72,21 +80,21 @@ export default defineComponent({
                     this.balance = web3.utils.fromWei(result);
                 })
                 .catch((error) => {
-                    this.error = error
+                    this.error1 = error
                 })
                 .finally(() => {
-                    this.isLoading = false
+                    this.isLoading1 = false
                 })
             setTimeout(() => {
-                this.isDelayElapsed = true
+                this.isDelayElapsed1 = true
             }, 200)
         },
 
         // GET COIN BALANCE
         async getBalanceOfCoins() {
-            this.error = null
-            this.isLoading = true
-            this.isDelayElapsed = false
+            this.error2 = null
+            this.isLoading2 = true
+            this.isDelayElapsed2 = false
             const web3 = new Web3(window.ethereum);
             var accounts = await web3.eth.getAccounts();
             const tokenAddresses = [{
@@ -96,16 +104,37 @@ export default defineComponent({
                 adresse : '0xc062368600228C308C75Ef2C02E22948297Acb89',
                 jeton : 'VEGETA'
             }]
-            console.log(tokenABI);
             const tokenInst = new web3.eth.Contract(tokenABI, '0x959b88966fc5b261df8359961357d34f4ee27b4a');
-            console.log(tokenInst);
             const balance = await tokenInst.methods.balanceOf(accounts[0]).call();
-            console.log(balance);
-            this.coins = web3.utils.fromWei(balance);
+            if (balance !== null) {
+                this.isLoading2 = false;
+                this.coins = web3.utils.fromWei(balance);
+            }
         },
+        getReward () {
+            this.error3 = null;
+            this.isLoading3 = true;
+            this.isDelayElapsed3 = false;
+            axios.defaults.headers.get['Accepts'] = 'application/json';
+            axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+            axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept';
+            axios.get('http://127.0.0.1:8000/user/reward').then((result) => {
+                this.reward = result.data.reward_number;
+            })
+            .catch((error) => {
+                this.error3 = error;
+            })
+            .finally(() => {
+                this.isLoading3 = false;
+            })
+            setTimeout(() => {
+                this.isDelayElapsed3 = true;
+            }, 200);
+        }
     },
 
     created: function () {
+        this.getReward();
         this.getBalance();
         this.getBalanceOfCoins();
     }

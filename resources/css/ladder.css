@@ -1,0 +1,10 @@
+.leaderboard table {width: 100%;}
+.leaderboard thead {text-align: left;}
+.leaderboard nav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.leaderboard nav a {
+    padding: 0 15px;
+}
