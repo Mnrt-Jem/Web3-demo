@@ -1,6 +1,6 @@
 <template>
     <div v-if="this.itemAvailable > 0">
-        <form  @submit="buyItem">
+        <form @submit="buyItem">
             <div class="nft_picture">
                 <div class="quantity">{{ this.itemAvailable }} / {{ this.item.quantity }}</div>
                 <div class="picture">

@@ -37,4 +37,9 @@ class UserController extends Controller
         $Inventory = User::getUserInventory($user->id);
         return response()->json($Inventory, 200);
     }
+    public function sendRewards()
+    {
+        $user = Auth::user();
+        User::resetRewards($user->id);
+    }
 }

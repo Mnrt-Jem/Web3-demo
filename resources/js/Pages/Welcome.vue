@@ -1,5 +1,194 @@
 <template>
-    <Head title="Welcome" />
+    <Head title="RATO GAMES" />
+
+    <div class="body">
+        <!-- NAV -->
+        <nav class="menu">
+            <div class="logo">
+                <Link :href="route('home')">
+                    <jet-application-mark class="block h-9 w-auto" />
+                </Link>
+            </div>
+            <div class="menu-link">
+                <Link class="link" :href="route('home')">About</Link>
+                <Link class="link" :href="route('home')">Games</Link>
+                <Link class="link" :href="route('home')">Get RATO</Link>
+                <Link class="link" :href="route('home')">Join Discord</Link>
+            </div>
+            <div class="auth">
+                <jet-button>
+                    Register / login
+                </jet-button>
+            </div>
+        </nav>
+        <!-- END NAV -->
+        <div class="main">
+            <!-- CAROUSEL -->
+            <Carousel :settings='settings' :autoplay="6000">
+                <Slide v-for='slide in 10' :key='slide'>
+                    <div class='carousel__item'>{{ slide }}</div>
+                </Slide>
+                <template #addons>
+                    <Pagination />
+                    <Navigation />
+                </template>
+            </Carousel>
+            <!-- END CAROUSEL -->
+
+            <!-- COMMUNITY -->
+            <div class="community">
+                <div class="com-block">
+                    <div class="com-title">
+                        <p>See Chart</p>
+                    </div>
+                    <div class="com-info">
+                        <div class="com-img">
+                            <img src="img/laptop.png">
+                        </div>
+                        <div class="com-resume">
+                            <div class="com-resume-title">
+                                <p>Receive rewards like GALA, limited edition NFTs and help the Gala Games ecosystem grow.</p>
+                            </div>
+                            <div class="com-resume-btn">
+                                <jet-button>
+                                    LEARN MORE
+                                </jet-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="com-block">
+                    <div class="com-title">
+                        <p>Join Our Community</p>
+                    </div>
+                    <div class="com-info">
+                        <div class="com-img">
+                            <img src="img/discord.png">
+                        </div>
+                        <div class="com-resume">
+                            <div class="com-resume-title">
+                                <p>Receive rewards like GALA, limited edition NFTs and help the Gala Games ecosystem grow.</p>
+                            </div>
+                            <div class="com-resume-btn">
+                                <jet-button>
+                                    LEARN MORE
+                                </jet-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END COMMUNITY -->
+
+            <!-- GAMES -->
+            <div class="games">
+                <div class="games-title">
+                    <p>Games</p>
+                </div>
+                <div class="games-area">
+                    <div class="game">
+                        <img src="img/game1.png">
+                    </div>
+                    <div class="game">
+                        <img src="img/game1.png">
+                    </div>
+                    <div class="game">
+                        <img src="img/game1.png">
+                    </div>
+                    <div class="game">
+                        <img src="img/game1.png">
+                    </div>
+                    <div class="game">
+                        <img src="img/game1.png">
+                    </div>
+                    <div class="game">
+                        <img src="img/game1.png">
+                    </div>
+                    <div class="game">
+                        <img src="img/game1.png">
+                    </div>
+                    <div class="game">
+                        <img src="img/game1.png">
+                    </div>
+                </div>
+            </div>
+            <!-- END GAMES -->
+
+            <!-- SHOP -->
+            <div class="shop">
+                <div class="shop-title">
+                    <p>Recent Items</p>
+                </div>
+                <div class="items-area">
+                    <div class="item">
+                        <div class="nft_picture">
+                            <div class="picture">
+                                <div class="quantity">597 / 1000</div>
+                                <img src="img/gold_climber.png">
+                            </div>
+                        </div>
+                        <div class="item-info">
+                            <div class="item-title">TEST</div>
+                            <div class="item-resume">TEST</div>
+                            <div class="item-bonus">Bonus : TEST</div>
+                            <div class="item-price">Price : TEST</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END SHOP -->
+        </div>
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer">
+                <div class="footer-block">
+                    <div class="footer-title">Contact</div>
+                    <div class="footer-list">
+                        <ul>
+                            <li>
+                                contact
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-block footer-separator">
+                    <div class="footer-title">Social Networks :</div>
+                    <div class="footer-list">
+                        <ul>
+                            <li>
+                                Linkedin
+                            </li>
+                            <li>
+                                Instagram
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-block">
+                    <div class="footer-title">Usefull Links :</div>
+                    <div class="footer-list">
+                        <ul>
+                            <li>
+                                Landing Page
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-link">
+                    logo
+                </div>
+                <div class="footer-link">
+                    legal mention
+                </div>
+                <div class="footer-link">
+                    <p>© RATO GAMES</p>
+                </div>
+            </div>
+        </footer>
+        <!-- END FOOTER -->
+    </div>
 
     <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
         <div v-if="canLogin" class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
@@ -113,6 +302,7 @@
 </template>
 
 <style scoped>
+    @import '../../css/index.css';
     .bg-gray-100 {
         background-color: #f7fafc;
         background-color: rgba(247, 250, 252, var(--tw-bg-opacity));
@@ -179,11 +369,23 @@
 <script>
     import { defineComponent } from 'vue'
     import { Head, Link } from '@inertiajs/inertia-vue3';
+    import JetApplicationMark from '@/Jetstream/ApplicationMark.vue'
+    import JetNavLink from '@/Jetstream/NavLink.vue'
+    import JetButton from '@/Jetstream/Button.vue';
+    import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+    import 'vue3-carousel/dist/carousel.css';
 
     export default defineComponent({
         components: {
             Head,
             Link,
+            JetApplicationMark,
+            JetNavLink,
+            JetButton,
+            Carousel,
+            Slide,
+            Pagination,
+            Navigation,
         },
 
         props: {
@@ -191,6 +393,15 @@
             canRegister: Boolean,
             laravelVersion: String,
             phpVersion: String,
-        }
+        },
+        data: () => ({
+            // carousel settings
+            settings: {
+                itemsToShow: 1,
+                snapAlign: 'center',
+            },
+            // breakpoints are mobile first
+            // any settings not specified will fallback to the carousel settings
+        }),
     })
 </script>

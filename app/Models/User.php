@@ -68,7 +68,9 @@ class User extends Authenticatable
     }
     public static function getUserReward($id)
     {
-        return DB::selectOne('SELECT * FROM rewards WHERE user_id = '.$id);
+        $rewards = DB::selectOne('SELECT * FROM rewards WHERE user_id = '.$id);
+        $rewards->date_now = date("Y-m-d H:i:s");
+        return $rewards;
     }
     public static function getUserInventory($id)
     {
@@ -87,5 +89,23 @@ class User extends Authenticatable
             $newQuantity = $userItems->quantity + 1;
             DB::update('UPDATE user_items SET quantity = ? WHERE user_id = ? and item_id=?',[$newQuantity,$userId,$itemId]);
         }
+    }
+    public static function resetRewards($userId)
+    {
+        $date_now = date("Y-m-d H:i:s");
+        DB::update('UPDATE rewards SET reward_number="0",created_at=? WHERE user_id=?',[$date_now,$userId]);
+        /*
+        $userItems = DB::selectOne('SELECT * FROM user_items WHERE user_id='.$userId.' and item_id='.$itemId);
+        if ($userItems === NULL) {
+            $user_item = New UserItems();
+            $user_item->user_id = $userId;
+            $user_item->item_id = $itemId;
+            $user_item->quantity = 1;
+            $user_item->save();
+        } else {
+            $newQuantity = $userItems->quantity + 1;
+            DB::update('UPDATE user_items SET quantity = ? WHERE user_id = ? and item_id=?',[$newQuantity,$userId,$itemId]);
+        }
+        */
     }
 }

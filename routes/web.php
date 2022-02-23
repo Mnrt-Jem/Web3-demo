@@ -21,7 +21,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('home');
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
@@ -30,6 +30,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/shop', function () {
 })->name('shop');
 Route::post('login-web3', \App\Actions\LoginUsingWeb3::class);
 Route::post('shop-buy', 'App\Http\Controllers\ShopController@buyItem');
+Route::post('user-rewards', 'App\Http\Controllers\UserController@sendRewards');
 
 // LADDERBOARD
 Route::middleware(['auth:sanctum', 'verified'])->get('/ladder', function () {

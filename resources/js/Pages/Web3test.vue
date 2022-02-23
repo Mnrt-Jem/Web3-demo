@@ -2,7 +2,7 @@
     <Head title="Web3test" />
     <div class="ml-12">
         <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-            Avax :
+            Balance Avax :
             <span v-if="error1">Error: {{ error1.message }}</span>
             <span v-else-if="isLoading1 && isDelayElapsed1">Loading...</span>
             <span v-else-if="!isLoading1">
@@ -10,7 +10,7 @@
             </span>
         </div>
         <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-            Coins :
+            Balance Coins :
             <span v-if="error2">Error: {{ error2.message }}</span>
             <span v-else-if="isLoading2 && isDelayElapsed2">Loading...</span>
             <span v-else-if="!isLoading2">
@@ -20,12 +20,35 @@
         <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
             Pending reward : {{ reward }} $
         </div>
-        <div class="mt-2">
+        <div v-if="waiting_rewards < 24" class="mt-2">
             <div class="flex items-center justify-center px-4 py-3 bg-gray-50 text-right sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
-                <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
-                    Claim your rewards
-                </button>
+                Wait {{ (24 - waiting_rewards) }} hours for claiming your rewards
             </div>
+            <div class="flex items-center justify-center px-4 py-3 bg-gray-50 text-right sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
+                <jet-button disabled>
+                    Claim your rewards
+                </jet-button>
+            </div>
+        </div>
+        <div v-else class="mt-2">
+            <div class="flex items-center justify-center px-4 py-3 bg-gray-50 text-right sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
+                You can claim your rewards
+            </div>
+            <form @submit="claimReward">
+                <div class="flex items-center justify-center px-4 py-3 bg-gray-50 text-right sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
+                    <jet-button>
+                        Claim your rewards
+                    </jet-button>
+                </div>
+            </form>
+        </div>
+        <div class="flex items-center justify-center">
+            <p class="error" v-if="errorRewards.length">
+                <b v-for="error in errorRewards">{{ error }}</b>
+            </p>
+            <p class="success" v-if="sucessRewards.length">
+                <b v-for="sucess in sucessRewards">{{ sucess }}</b>
+            </p>
         </div>
     </div>
 </template>
@@ -35,12 +58,15 @@ import { defineComponent } from 'vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import Web3 from 'web3/dist/web3.min.js';
 import tokenABI from './erc20abi.json';
+import JetButton from '@/Jetstream/Button.vue';
+import { useForm } from '@inertiajs/inertia-vue3';
 
 export default defineComponent({
     name: "Web3test",
     components: {
         Head,
         Link,
+        JetButton,
     },
 
     props: {
@@ -57,6 +83,8 @@ export default defineComponent({
         error1: null,
         error2: null,
         error3: null,
+        errorRewards: [],
+        sucessRewards: [],
         isDelayElapsed1: false,
         isDelayElapsed2: false,
         isDelayElapsed3: false,
@@ -64,6 +92,7 @@ export default defineComponent({
         balance: null,
         coins: null,
         reward: null,
+        waiting_rewards: null,
 
     }),
 
@@ -120,6 +149,10 @@ export default defineComponent({
             axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept';
             axios.get('http://127.0.0.1:8000/user/reward').then((result) => {
                 this.reward = result.data.reward_number;
+                this.waiting_rewards = result.data.created_at;
+                var dt1 = new Date(result.data.created_at);
+                var dt2 = new Date(result.data.date_now);
+                this.waiting_rewards = this.diff_hours(dt1, dt2);
             })
             .catch((error) => {
                 this.error3 = error;
@@ -130,7 +163,23 @@ export default defineComponent({
             setTimeout(() => {
                 this.isDelayElapsed3 = true;
             }, 200);
-        }
+        },
+        diff_hours(dt2, dt1) {
+            var diff =(dt2.getTime() - dt1.getTime()) / 1000;
+            diff /= (60 * 60);
+            return Math.abs(Math.round(diff));
+        },
+        claimReward: function (e) {
+            this.sucessRewards = [];
+            this.errorRewards = [];
+            // Request web3
+
+            // User delete rewards
+                useForm().post('/user-rewards');
+                this.sucessRewards.push('Your rewards as been send.');
+            // End request web3
+            // e.preventDefault()
+        },
     },
 
     created: function () {

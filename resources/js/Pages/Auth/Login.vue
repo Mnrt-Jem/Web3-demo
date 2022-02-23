@@ -111,16 +111,20 @@ export default defineComponent({
             }
 
             const web3 = new Web3(window.ethereum);
+            const network = await web3.eth.net.getId();
+            if (network == 43114) {
+                const message = [
+                    "I have read and accept the terms and conditions (https://example.org/tos) of this app.",
+                    "Please sign me in!"
+                ].join("\n")
 
-            const message = [
-                "I have read and accept the terms and conditions (https://example.org/tos) of this app.",
-                "Please sign me in!"
-            ].join("\n")
+                const address = (await web3.eth.requestAccounts())[0]
+                const signature = await web3.eth.personal.sign(message, address)
 
-            const address = (await web3.eth.requestAccounts())[0]
-            const signature = await web3.eth.personal.sign(message, address)
-
-            return useForm({ message, address, signature }).post('/login-web3')
+                return useForm({ message, address, signature }).post('/login-web3')
+            } else {
+                alert('Switch your network to : Avalanche -> https://support.avax.network/en/articles/4626956-how-do-i-set-up-metamask-on-avalanche');
+            }
         }
     }
 })
