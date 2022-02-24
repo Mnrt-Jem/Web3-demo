@@ -20,6 +20,7 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'url' => env('APP_URL'),
     ]);
 })->name('home');
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
