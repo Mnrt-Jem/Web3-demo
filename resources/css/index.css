@@ -15,6 +15,7 @@
     color: white;
     background-color: #272727;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    height: 60px;
 }
 
 .menu-link {
@@ -33,9 +34,18 @@
     width: max-content;
     text-align: center;
     margin: 0 15px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
 }
 .menu-link .link:hover {
-    border-bottom: 2px solid #2D3748;
+    border-bottom: 4px solid #2D3748;
+}
+.menu-link .link[active="true"] {
+    border-bottom: 4px solid #268aef;
+}
+.discord-min {
+    height: 2.2em;
 }
 .auth {
     width: 50%;
@@ -125,7 +135,7 @@
     margin-top: 15px;
     background-color: #2D3748;
     padding: 10px;
-    border-radius: 8px;
+    border-radius: 4px;
 }
 .com-img {
     display: flex;
@@ -148,7 +158,7 @@
     width: 100%;
 }
 .com-img img {
-    width: 100%;
+    width: max-content;
     height: 115px;
 }
 /* END COMMUNITY */
@@ -253,10 +263,6 @@
     width: 100%;
     color: white;
 }
-/* SHOP */
-
-
-/* END SHOP */
 
 
 /* FOOTER */
@@ -334,3 +340,147 @@ footer {
     border-left: 2px solid #272727;
     border-right: 2px solid #272727;
 }
+
+
+/* ABOUT PAGE */
+.about-main {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    padding: 60px 0;
+    background-color: #1a202c;
+}
+.about-head {
+    background-image: url("../../public/img/about.png");
+    width: 100%;
+    height: auto;
+}
+.about-title {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 150px 200px;
+    color: white;
+    font-size: 65px;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 1px 1px 2px black;
+}
+.about-info {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.about-text {
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0 100px;
+}
+.about-text-title {
+    width: 100%;
+    display: flex;
+    color: white;
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+.about-text-resume {
+    width: 100%;
+    display: flex;
+    color: white;
+    font-size: 28px;
+}
+.about-img {
+    display: flex;
+    width: 50%;
+    justify-content: center;
+}
+/* END ABOUT PAGE */
+
+
+/* GAMES PAGE */
+.games-main {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    padding: 100px 200px;
+    background-color: #1a202c;
+}
+.game-div {
+    display: flex;
+    width: 100%;
+    background-color: #2D3748;
+    align-items: center;
+}
+.game-img {
+    display: flex;
+    width: 50%;
+    background-color: #2D3748;
+    padding: 10px;
+}
+.game-info {
+    display: flex;
+    width: 50%;
+    background-color: #2D3748;
+    padding: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.game-title {
+    display: flex;
+    width: 100%;
+    color: white;
+    font-size: 28px;
+}
+.game-resume {
+    display: flex;
+    width: 100%;
+    color: white;
+    font-size: 20px;
+}
+.game-play {
+    display: flex;
+    width: 100%;
+}
+
+/* END GAMES PAGE */
+
+
+/* TOKEN PAGE */
+.token-main {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    padding: 60px 0;
+    background-color: #1a202c;
+}
+.token-head {
+    background-image: url("../../public/img/about.png");
+    width: 100%;
+    height: auto;
+}
+.token-title {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 150px 200px;
+    color: white;
+    font-size: 65px;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 1px 1px 2px black;
+}
+.token-info {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    color:white;
+}
+
+/* END TOKEN PAGE */

@@ -3,26 +3,7 @@
 
     <div class="body">
         <!-- NAV -->
-        <nav class="menu">
-            <div class="menu-link">
-                <div class="logo">
-                    <Link :href="route('home')">
-                        <jet-application-mark class="block h-9 w-auto" />
-                    </Link>
-                </div>
-                <Link class="link" :href="route('home')">About</Link>
-                <Link class="link" :href="route('home')">Games</Link>
-                <Link class="link" :href="route('home')">Get RATO</Link>
-                <Link class="link" :href="route('home')">Join Discord</Link>
-            </div>
-            <div class="auth">
-                <Link class="link" :href="route('login')">
-                    <jet-button>
-                        Register / login
-                    </jet-button>
-                </Link>
-            </div>
-        </nav>
+        <HeadNav/>
         <!-- END NAV -->
         <div class="main">
             <!-- CAROUSEL -->
@@ -71,7 +52,7 @@
                         </div>
                         <div class="com-resume">
                             <div class="com-resume-title">
-                                <p>Receive rewards like GALA, limited edition NFTs and help the Gala Games ecosystem grow.</p>
+                                <p>Join our vibrant community of gamers and NFT enthusiasts to learn all the latest tips and tricks.</p>
                             </div>
                             <div class="com-resume-btn">
                                 <jet-button>
@@ -124,84 +105,17 @@
                     <p>Recent Items</p>
                 </div>
                 <div class="items-area">
-                    <div class="item card">
-                        <div class="nft_picture">
-                            <div class="picture">
-                                <div class="quantity">597 / 1000</div>
-                                <img src="img/gold_climber.png">
-                            </div>
-                        </div>
-                        <div class="item-info">
-                            <div class="item-title">TEST</div>
-                            <div class="item-resume">TEST</div>
-                            <div class="item-bonus">Bonus : TEST</div>
-                            <div class="item-price">Price : TEST</div>
-                        </div>
+                    <div v-for="item in items" class="item card">
+                        <LastestItem v-bind:item="item" />
                     </div>
                 </div>
             </div>
             <!-- END SHOP -->
         </div>
-        <!-- FOOTER -->
-        <footer>
-            <div class="footer">
-                <div class="footer-block">
-                    <div class="footer-title">Contact</div>
-                    <div class="footer-list">
-                        <ul>
-                            <li>
-                                Contact Admin on discord
-                            </li>
-                            <li>
-                                Contact me on twitter
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="footer-block footer-separator">
-                    <div class="footer-title">Social Networks :</div>
-                    <div class="footer-list">
-                        <ul>
-                            <li>
-                                Discord
-                            </li>
-                            <li>
-                                Twitter
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="footer-block">
-                    <div class="footer-title">Usefull Links :</div>
-                    <div class="footer-list">
-                        <ul>
-                            <li>
-                                About
-                            </li>
-                            <li>
-                                Games
-                            </li>
-                            <li>
-                                Get RATO
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <div class="footer-link">
-                    <jet-application-mark class="block h-9 w-auto" />
-                </div>
-                <div class="footer-link">
-                    <Link class="link" :href="route('home')">Legal Mention</Link>
-                </div>
-                <div class="footer-link">
-                    <p>© RATO GAMES</p>
-                </div>
-            </div>
-        </footer>
-        <!-- END FOOTER -->
     </div>
+    <!-- FOOTER -->
+    <Footer />
+    <!-- END FOOTER -->
 </template>
 
 <style scoped>
@@ -216,6 +130,9 @@
     import JetButton from '@/Jetstream/Button.vue';
     import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
     import 'vue3-carousel/dist/carousel.css';
+    import HeadNav from '@/Pages/HeadNav.vue'
+    import LastestItem from '@/Pages/LastestItem.vue'
+    import Footer from '@/Pages/Footer.vue'
 
     export default defineComponent({
         components: {
@@ -228,6 +145,9 @@
             Slide,
             Pagination,
             Navigation,
+            HeadNav,
+            LastestItem,
+            Footer,
         },
 
         props: {
@@ -247,8 +167,20 @@
             slides: ['img/slider_exemple_1.jpg', 'img/slider_exemple_2.jpg', 'img/slider_exemple_3.jpg'],
             // breakpoints are mobile first
             // any settings not specified will fallback to the carousel settings
+            items: null,
         }),
+        methods: {
+            getItems () {
+                axios.defaults.headers.get['Accepts'] = 'application/json';
+                axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+                axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept';
+                axios.get('http://127.0.0.1:8000/shop/lastest_items').then((result) => {
+                    this.items = result.data;
+                });
+            },
+        },
         created: function () {
+            this.getItems();
         },
     })
 </script>
