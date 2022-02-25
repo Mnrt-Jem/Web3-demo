@@ -1,11 +1,11 @@
 <template>
     <Head title="Log in" />
 
-    <jet-authentication-card>
-        <template #logo>
+    <jet-authentication-card style="background-color: #2D3748">
+        <template #logo >
             <jet-authentication-card-logo />
         </template>
-        <div class="text-center pt-4 pb-8 border-gray-200">
+        <div class="text-center pt-4 pb-4 border-gray-200">
             <jet-button @click="loginWeb3">
                 Login with MetaMask
             </jet-button>
