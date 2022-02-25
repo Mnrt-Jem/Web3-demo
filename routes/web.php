@@ -53,6 +53,9 @@ Route::get('/token', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/play', function () {
+    return Inertia::render('Play');
+})->name('play');
 Route::middleware(['auth:sanctum', 'verified'])->get('/shop', function () {
     return Inertia::render('Shop');
 })->name('shop');

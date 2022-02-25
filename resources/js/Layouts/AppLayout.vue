@@ -24,6 +24,11 @@
                                 </jet-nav-link>
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <jet-nav-link :href="route('play')" :active="route().current('play')">
+                                    Play
+                                </jet-nav-link>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <jet-nav-link :href="route('ladder')" :active="route().current('ladder')">
                                     Leaderboard
                                 </jet-nav-link>
@@ -164,6 +169,11 @@
                     <div class="pt-2 pb-3 space-y-1">
                         <jet-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
+                        </jet-responsive-nav-link>
+                    </div>
+                    <div class="pt-2 pb-3 space-y-1">
+                        <jet-responsive-nav-link :href="route('play')" :active="route().current('play')">
+                            Play
                         </jet-responsive-nav-link>
                     </div>
                     <div class="pt-2 pb-3 space-y-1">
